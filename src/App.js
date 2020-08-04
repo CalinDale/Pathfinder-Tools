@@ -12,6 +12,7 @@ class App extends Component {
 			{ name: "Weather Generator", key: 5 },
 			{ name: "Treasure Planner", key: 6 },
 			{ name: "Item Creation", key: 7 },
+			{ name: "Feats Index", key: 8 },
 		],
 	};
 	render() {
