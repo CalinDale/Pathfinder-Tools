@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MainMenu from "./components/MainMenu";
-import MonsterIndex from "./components/MonsterIndex";
+import MonsterIndex from "./components/monster-index/MonsterIndex";
 import { BrowserRouter, Route } from "react-router-dom";
 
 class App extends Component {
