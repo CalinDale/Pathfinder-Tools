@@ -6,19 +6,31 @@ import MonsterFilters from "./MonsterFilters";
 class MonsterIndex extends Component {
 	state = {
 		monsters: Monsters,
-		name: "",
+		filters: { name: "", type: "" },
 	};
-	updateFilters(value) {
-		this.setState({ name: value });
+	updateFilters(name, value) {
+		let filters = this.state.filters;
+		filters[name] = value;
+		this.setState({ filters: filters });
+		console.log(filters);
+	}
+	filterResults(monsters, filters) {
+		return monsters.filter((monster) => {
+			return (
+				monster.name.toLowerCase().indexOf(filters.name.toLowerCase()) !== -1 &&
+				monster.type.toLowerCase().indexOf(filters.type.toLowerCase()) !== -1
+			);
+		});
 	}
 	render() {
-		let results = this.state.monsters.filter((monster) => {
-			return monster.name.indexOf(this.state.name) !== -1;
-		});
+		let results = this.filterResults(this.state.monsters, this.state.filters);
 		return (
 			<div className="MonsterIndex">
 				<h1>Monster Index</h1>
-				<MonsterFilters onChange={this.updateFilters.bind(this)} />
+				<MonsterFilters
+					handleChange={this.updateFilters.bind(this)}
+					filters={this.state.filters}
+				/>
 				<ResultsList results={results} />
 			</div>
 		);
