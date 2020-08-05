@@ -1,14 +1,15 @@
 import React from "react";
+import { Link, NavLink } from "react-router-dom";
 
 const MainMenu = ({ tools }) => {
 	const toolsList = tools.map((tool) => {
 		return (
 			<div className="ToolLink" key={tool.key}>
-				<div>{tool.name}</div>
+				<Link to={tool.link}>{tool.name}</Link>
 			</div>
 		);
 	});
-	return <div className="MainMenu">{toolsList}</div>;
+	return <nav className="MainMenu">{toolsList}</nav>;
 };
 
 export default MainMenu;
