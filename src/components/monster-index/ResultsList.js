@@ -5,7 +5,7 @@ const ResultsList = ({ results }) => {
 	const resultsList = results.map((result) => {
 		return (
 			<div className="ResultLink" key={result.key}>
-				<Link to={result.link}>{result.name}</Link>
+				<Link to={"/monsters/" + result.key}>{result.name}</Link>
 			</div>
 		);
 	});

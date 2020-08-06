@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import MainMenu from "./components/MainMenu";
 import MonsterIndex from "./components/monster-index/MonsterIndex";
+import MonsterDetails from "./components/monster-index/monster-details/MonsterDetails";
 import { BrowserRouter, Route } from "react-router-dom";
 
 class App extends Component {
@@ -13,7 +14,8 @@ class App extends Component {
 						<p>under construction</p>
 					</header>
 					<MainMenu />
-					<Route path="/monster-index" component={MonsterIndex} />
+					<Route path="/monsters" component={MonsterIndex} />
+					<Route path="/monsters/:monster_id" component={MonsterDetails} />
 				</div>
 			</BrowserRouter>
 		);
