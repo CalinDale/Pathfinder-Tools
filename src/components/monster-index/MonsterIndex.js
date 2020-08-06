@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import Monsters from "../../data/Monsters";
 import ResultsList from "./ResultsList";
 import MonsterFilters from "./MonsterFilters";
+import { connect } from "react-redux";
 
 class MonsterIndex extends Component {
 	state = {
-		monsters: Monsters,
 		filters: { name: "", type: "" },
 	};
 	updateFilters(name, value) {
@@ -23,7 +22,7 @@ class MonsterIndex extends Component {
 		});
 	}
 	render() {
-		let results = this.filterResults(this.state.monsters, this.state.filters);
+		let results = this.filterResults(this.props.monsters, this.state.filters);
 		return (
 			<div className="MonsterIndex">
 				<h1>Monster Index</h1>
@@ -37,4 +36,10 @@ class MonsterIndex extends Component {
 	}
 }
 
-export default MonsterIndex;
+const mapStateToProps = (state) => {
+	return {
+		monsters: state.monsters,
+	};
+};
+
+export default connect(mapStateToProps)(MonsterIndex);
