@@ -1,9 +1,11 @@
+const monsters = [
+	{ key: "0", name: "Slime", type: "Ooze", subtypes: [] },
+	{ key: "1", name: "Skeleton", type: "Undead", subtypes: [] },
+	{ key: "2", name: "Ice Zombie", type: "Undead", subtypes: ["Cold"] },
+];
+
 const initState = {
-	monsters: [
-		{ key: "0", name: "Slime", type: "Ooze", subtypes: [] },
-		{ key: "1", name: "Skeleton", type: "Undead", subtypes: [] },
-		{ key: "2", name: "Ice Zombie", type: "Undead", subtypes: ["Cold"] },
-	],
+	monsters: monsters,
 	tools: [
 		{ name: "Monster Index", link: "/monsters", key: 0 },
 		{ name: "Monster Builder", link: "/", key: 1 },
@@ -15,10 +17,23 @@ const initState = {
 		{ name: "Item Creation", link: "/", key: 7 },
 		{ name: "Feats Index", link: "/", key: 8 },
 	],
+	filteredMonsters: monsters,
 };
 
 const rootReducer = (state = initState, action) => {
 	let newState = { ...state };
+	console.log("Reducer!");
+	console.log(action);
+	console.log(newState);
+
+	switch (action.type) {
+		case "UPDATE_FILTERED_MONSTERS":
+			newState.filteredMonsters = action.filteredMonsters;
+			break;
+		default:
+			break;
+	}
+
 	return newState;
 };
 

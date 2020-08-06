@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import ResultsList from "./ResultsList";
+import MonsterList from "./MonsterList";
 import MonsterFilters from "./MonsterFilters";
 import { connect } from "react-redux";
+import { updateFilteredMonsters } from "../../actions/filteredMonstersActions";
 
 class MonsterIndex extends Component {
 	state = {
@@ -10,10 +11,12 @@ class MonsterIndex extends Component {
 	updateFilters(name, value) {
 		let filters = this.state.filters;
 		filters[name] = value;
-		this.setState({ filters: filters });
-		console.log(filters);
+		this.setState({ filters });
+		this.props.updateFilteredMonsters(
+			this.filterMonsters(this.props.monsters, filters)
+		);
 	}
-	filterResults(monsters, filters) {
+	filterMonsters(monsters, filters) {
 		return monsters.filter((monster) => {
 			return (
 				monster.name.toLowerCase().indexOf(filters.name.toLowerCase()) !== -1 &&
@@ -22,7 +25,6 @@ class MonsterIndex extends Component {
 		});
 	}
 	render() {
-		let results = this.filterResults(this.props.monsters, this.state.filters);
 		return (
 			<div className="MonsterIndex">
 				<h1>Monster Index</h1>
@@ -30,7 +32,7 @@ class MonsterIndex extends Component {
 					handleChange={this.updateFilters.bind(this)}
 					filters={this.state.filters}
 				/>
-				<ResultsList results={results} />
+				<MonsterList monsters={this.props.filteredMonsters} />
 			</div>
 		);
 	}
@@ -39,7 +41,16 @@ class MonsterIndex extends Component {
 const mapStateToProps = (state) => {
 	return {
 		monsters: state.monsters,
+		filteredMonsters: state.filteredMonsters,
 	};
 };
 
-export default connect(mapStateToProps)(MonsterIndex);
+const mapDispatchToProps = (dispatch) => {
+	return {
+		updateFilteredMonsters: (filteredMonsters) => {
+			dispatch(updateFilteredMonsters(filteredMonsters));
+		},
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MonsterIndex);
