@@ -4,6 +4,15 @@ import MonsterFilters from "./MonsterFilters";
 import { connect } from "react-redux";
 
 class MonsterIndex extends Component {
+	state = {
+		filters: { name: "", type: "" },
+	};
+	updateFilters(name, value) {
+		let filters = this.state.filters;
+		filters[name] = value;
+		this.setState({ filters: filters });
+		console.log(filters);
+	}
 	filterResults(monsters, filters) {
 		return monsters.filter((monster) => {
 			return (
@@ -13,11 +22,14 @@ class MonsterIndex extends Component {
 		});
 	}
 	render() {
-		let results = this.filterResults(this.props.monsters, this.props.filters);
+		let results = this.filterResults(this.props.monsters, this.state.filters);
 		return (
 			<div className="MonsterIndex">
 				<h1>Monster Index</h1>
-				<MonsterFilters />
+				<MonsterFilters
+					handleChange={this.updateFilters.bind(this)}
+					filters={this.state.filters}
+				/>
 				<ResultsList results={results} />
 			</div>
 		);
@@ -27,7 +39,6 @@ class MonsterIndex extends Component {
 const mapStateToProps = (state) => {
 	return {
 		monsters: state.monsters,
-		filters: state.filters,
 	};
 };
 

@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
-import { updateFilter } from "../../actions/filterActions";
 
 class MonsterFilters extends Component {
-	handleChange(event) {
-		this.props.updateFilter(event.target.name, event.target.value);
+	updateFilter(event) {
+		this.props.handleChange(event.target.name, event.target.value);
 	}
 	render() {
 		return (
@@ -15,12 +13,13 @@ class MonsterFilters extends Component {
 					<input
 						name="name"
 						type="text"
-						onChange={this.handleChange.bind(this)}
+						value={this.props.filters.name}
+						onChange={this.updateFilter.bind(this)}
 					/>
 				</label>
 				<label>
 					Type:
-					<select name="type" onChange={this.handleChange.bind(this)}>
+					<select name="type" onChange={this.updateFilter.bind(this)}>
 						<option value="">Select</option>
 						<option>Undead</option>
 						<option>Ooze</option>
@@ -31,18 +30,4 @@ class MonsterFilters extends Component {
 	}
 }
 
-const mapStateToProps = (state) => {
-	return {
-		filters: state.filters,
-	};
-};
-
-const mapDispatchToProps = (dispatch) => {
-	return {
-		updateFilter: (name, value) => {
-			dispatch(updateFilter(name, value));
-		},
-	};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(MonsterFilters);
+export default MonsterFilters;
