@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import MonsterList from "./MonsterList";
 import MonsterFilters from "./MonsterFilters";
 import { connect } from "react-redux";
-import { updateFilteredMonsters } from "../../actions/filteredMonstersActions";
+import { updateFilteredMonsters } from "../../store/actions/filteredMonstersActions";
 
 class MonsterIndex extends Component {
 	state = {
