@@ -1,6 +1,8 @@
 export const updateFilteredMonsters = (filteredMonsters) => {
-	return {
-		type: "UPDATE_FILTERED_MONSTERS",
-		filteredMonsters,
+	return (dispatch, getState) => {
+		dispatch({
+			type: "UPDATE_FILTERED_MONSTERS",
+			filteredMonsters,
+		});
 	};
 };
