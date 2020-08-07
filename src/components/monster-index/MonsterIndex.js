@@ -3,6 +3,8 @@ import MonsterList from "./MonsterList";
 import MonsterFilters from "./MonsterFilters";
 import { connect } from "react-redux";
 import { updateFilteredMonsters } from "../../store/actions/filteredMonstersActions";
+import { firestoreConnect } from "react-redux-firebase";
+import { compose } from "redux";
 
 class MonsterIndex extends Component {
 	state = {
@@ -39,7 +41,9 @@ class MonsterIndex extends Component {
 }
 
 const mapStateToProps = (state) => {
+	console.log(state);
 	return {
+		//allMonsters: state.firestore.data.monsters,
 		allMonsters: state.monsters.all,
 		filteredMonsters: state.monsters.filtered,
 	};
@@ -53,4 +57,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MonsterIndex);
+export default compose(
+	connect(mapStateToProps, mapDispatchToProps),
+	firestoreConnect([{ collection: "monsters" }])
+)(MonsterIndex);
