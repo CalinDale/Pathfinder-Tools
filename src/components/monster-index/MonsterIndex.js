@@ -13,7 +13,7 @@ class MonsterIndex extends Component {
 		filters[name] = value;
 		this.setState({ filters });
 		this.props.updateFilteredMonsters(
-			this.filterMonsters(this.props.monsters, filters)
+			this.filterMonsters(this.props.allMonsters, filters)
 		);
 	}
 	filterMonsters(monsters, filters) {
@@ -40,8 +40,8 @@ class MonsterIndex extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		monsters: state.monsters,
-		filteredMonsters: state.filteredMonsters,
+		allMonsters: state.monsters.all,
+		filteredMonsters: state.monsters.filtered,
 	};
 };
 
