@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 const MonsterList = ({ monsters }) => {
 	const FilteredMonsterList = monsters.map((monster) => {
 		return (
-			<div className="MonsterLink" key={monster.key}>
-				<Link to={"/monsters/" + monster.key}>{monster.name}</Link>
+			<div className="MonsterLink" key={monster.id}>
+				<Link to={"/monsters/" + monster.id}>{monster.name}</Link>
 			</div>
 		);
 	});

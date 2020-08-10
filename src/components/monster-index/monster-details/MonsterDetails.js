@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { compose } from "redux";
+import { firestoreConnect } from "react-redux-firebase";
 
 class MonsterDetails extends Component {
 	render() {
@@ -15,8 +17,13 @@ class MonsterDetails extends Component {
 const mapStateToProps = (state, ownProps) => {
 	let id = ownProps.match.params.monster_id;
 	return {
-		monster: state.monsters.find((monster) => monster.key === id),
+		monster: state.firestore.ordered.monsters.find(
+			(monster) => monster.id === id
+		),
 	};
 };
 
-export default connect(mapStateToProps)(MonsterDetails);
+export default compose(
+	connect(mapStateToProps),
+	firestoreConnect([{ collection: "monsters" }])
+)(MonsterDetails);

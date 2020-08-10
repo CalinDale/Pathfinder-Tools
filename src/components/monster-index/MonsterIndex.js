@@ -41,10 +41,8 @@ class MonsterIndex extends Component {
 }
 
 const mapStateToProps = (state) => {
-	console.log(state);
 	return {
-		//allMonsters: state.firestore.data.monsters,
-		allMonsters: state.monsters.all,
+		allMonsters: state.firestore.ordered.monsters,
 		filteredMonsters: state.monsters.filtered,
 	};
 };
