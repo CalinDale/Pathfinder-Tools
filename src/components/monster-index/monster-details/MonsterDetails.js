@@ -15,11 +15,11 @@ class MonsterDetails extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-	let id = ownProps.match.params.monster_id;
+	const id = ownProps.match.params.monster_id;
+	const monsters = state.firestore.data.monsters;
+	const monster = monsters ? monsters[id] : null;
 	return {
-		monster: state.firestore.ordered.monsters.find(
-			(monster) => monster.id === id
-		),
+		monster: monster,
 	};
 };
 
