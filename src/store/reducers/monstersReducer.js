@@ -1,5 +1,5 @@
 const initState = {
-	filtered: [],
+	filtered: null,
 };
 
 const monstersReducer = (state = initState, action) => {
