@@ -27,7 +27,6 @@ class MonsterIndex extends Component {
 		});
 	}
 	render() {
-		console.log("beep");
 		return (
 			<div className="MonsterIndex">
 				<h1>Monster Index</h1>
@@ -35,13 +34,7 @@ class MonsterIndex extends Component {
 					handleChange={this.updateFilters.bind(this)}
 					filters={this.state.filters}
 				/>
-				<MonsterList
-					monsters={
-						this.props.filteredMonsters != null
-							? this.props.filteredMonsters
-							: this.props.allMonsters
-					}
-				/>
+				<MonsterList monsters={this.props.filteredMonsters} />
 			</div>
 		);
 	}
