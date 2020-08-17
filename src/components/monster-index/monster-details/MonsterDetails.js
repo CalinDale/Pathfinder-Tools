@@ -8,7 +8,7 @@ class MonsterDetails extends Component {
 		const monsterDetails = this.props.monster ? (
 			<h1>{this.props.monster.name}</h1>
 		) : (
-			<h1>No Monster Found</h1>
+			<h1>No Monster Found / Loading Monster</h1>
 		);
 		return <div className="MonsterDetailsContainer">{monsterDetails}</div>;
 	}
