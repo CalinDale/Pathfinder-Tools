@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import UploadMonsters from "./UploadMonsters";
 
 class MainMenu extends Component {
 	state = {
@@ -24,7 +25,7 @@ class MainMenu extends Component {
 				</div>
 			);
 		});
-		return <nav className="MainMenu">{toolsList}</nav>;
+		return <nav className="MainMenu">{toolsList}<UploadMonsters/></nav>;
 	}
 }
 
