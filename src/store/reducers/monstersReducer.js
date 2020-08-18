@@ -5,7 +5,7 @@ const initState = {
 const monstersReducer = (state = initState, action) => {
 	let newState = { ...state };
 
-	console.log("MONSTER REDUCER", action);
+	console.log(action.type, action);
 
 	switch (action.type) {
 		case "UPDATE_FILTERED_MONSTERS":
