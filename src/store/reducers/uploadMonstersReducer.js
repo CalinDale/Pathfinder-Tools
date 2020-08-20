@@ -5,8 +5,6 @@ const initState = {
 const uploadMonstersReducer = (state = initState, action) => {
 	let newState = { ...state };
 
-	console.log(action.type, action);
-
 	switch (action.type) {
 		case "UPLOAD_MONSTER":
 			newState.uploadedMonsters.push(action.monster);
