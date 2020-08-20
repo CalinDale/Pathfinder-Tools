@@ -18,12 +18,29 @@ class MonsterIndex extends Component {
 			this.filterMonsters(this.props.allMonsters, filters)
 		);
 	}
+	filterByName(monster, filters) {
+		let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
+		let filterTerm = filters.name.replace(/\s+/g, "").toLowerCase();
+		return monsterName.includes(filterTerm);
+	}
+
+	createFilterFunctionsArray(filters) {
+		let functions = [];
+		if (filters.name != "") functions.push(this.filterByName);
+		return functions;
+	}
+
 	filterMonsters(monsters, filters) {
+		//determine which filters are being used.
+		//Do this beforehand so we're not re-checking which filters to use for every monster.
+		let filterFunctions = this.createFilterFunctionsArray(filters);
+
 		return monsters.filter((monster) => {
-			return (
-				monster.name.toLowerCase().indexOf(filters.name.toLowerCase()) !== -1 &&
-				monster.type.toLowerCase().indexOf(filters.type.toLowerCase()) !== -1
-			);
+			let result = true;
+			filterFunctions.forEach((filterFunction) => {
+				result = result && filterFunction(monster, filters);
+			});
+			return result;
 		});
 	}
 	render() {

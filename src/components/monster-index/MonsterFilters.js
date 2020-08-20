@@ -8,23 +8,23 @@ class MonsterFilters extends Component {
 		return (
 			<form className="MonsterFilters">
 				<h2>Monster Filters</h2>
-				<label>
-					Name:
+				<div>
+					<label>Name:</label>
 					<input
 						name="name"
 						type="text"
 						value={this.props.filters.name}
 						onChange={this.updateFilter.bind(this)}
 					/>
-				</label>
-				<label>
-					Type:
+				</div>
+				<div>
+					<label>Type:</label>
 					<select name="type" onChange={this.updateFilter.bind(this)}>
 						<option value="">Select</option>
 						<option>Undead</option>
 						<option>Ooze</option>
 					</select>
-				</label>
+				</div>
 			</form>
 		);
 	}
