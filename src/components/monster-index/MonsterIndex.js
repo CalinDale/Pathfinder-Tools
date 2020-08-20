@@ -10,6 +10,15 @@ class MonsterIndex extends Component {
 	state = {
 		filters: { name: "", type: "" },
 	};
+
+	filterFunctions = {
+		name: (monster, filters) => {
+			let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
+			let filterTerm = filters.name.replace(/\s+/g, "").toLowerCase();
+			return monsterName.includes(filterTerm);
+		},
+	};
+
 	updateFilters(name, value) {
 		let filters = this.state.filters;
 		filters[name] = value;
@@ -18,15 +27,10 @@ class MonsterIndex extends Component {
 			this.filterMonsters(this.props.allMonsters, filters)
 		);
 	}
-	filterByName(monster, filters) {
-		let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
-		let filterTerm = filters.name.replace(/\s+/g, "").toLowerCase();
-		return monsterName.includes(filterTerm);
-	}
 
 	createFilterFunctionsArray(filters) {
 		let functions = [];
-		if (filters.name != "") functions.push(this.filterByName);
+		if (filters.name != "") functions.push(this.filterFunctions.name);
 		return functions;
 	}
 
