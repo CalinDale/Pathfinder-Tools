@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateFilteredMonsters } from "../../../store/actions/filteredMonstersActions";
+import MonsterNameFilter from "./MonsterNameFilter";
 import { firestoreConnect } from "react-redux-firebase";
 import { compose } from "redux";
 
@@ -17,14 +18,14 @@ class MonsterIndexFilters extends Component {
 		},
 	};
 
-	updateFilters(event) {
+	updateFilter = (name, value) => {
 		let filters = this.state.filters;
-		filters[event.target.name] = event.target.value;
+		filters[name] = value;
 		this.setState({ filters });
 		this.props.updateFilteredMonsters(
 			this.filterMonsters(this.props.allMonsters, filters)
 		);
-	}
+	};
 
 	createFilterFunctionsArray(filters) {
 		let functions = [];
@@ -50,15 +51,10 @@ class MonsterIndexFilters extends Component {
 		return (
 			<form className="MonsterFilters">
 				<h2>Monster Filters</h2>
-				<div>
-					<label>Name:</label>
-					<input
-						name="name"
-						type="text"
-						value={this.state.filters.name}
-						onChange={this.updateFilters.bind(this)}
-					/>
-				</div>
+				<MonsterNameFilter
+					value={this.state.filters.name}
+					updateFilter={this.updateFilter}
+				/>
 			</form>
 		);
 	}
@@ -70,7 +66,6 @@ const mapStateToProps = (state) => {
 		: null;
 	return {
 		allMonsters: allMonsters,
-		filteredMonsters: state.monsters.filtered,
 	};
 };
 

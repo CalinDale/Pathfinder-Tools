@@ -1,23 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 
-class MonsterIndexNameFilter extends Component {
-	updateFilter(event) {
-		this.props.handleChange(event.target.name, event.target.value);
+const MonsterIndexNameFilter = (props) => {
+	function handleChange(event) {
+		props.updateFilter(event.target.name, event.target.value);
 	}
-	render() {
-		return (
-			<div id="nameFilterContainer">
-				<label>Name:</label>
-				<input
-					id="nameFilter"
-					name="name"
-					type="text"
-					value={this.value}
-					onChange={this.updateFilter.bind(this)}
-				/>
-			</div>
-		);
-	}
-}
+	return (
+		<div id="nameFilterContainer">
+			<label>Name:</label>
+			<input
+				id="nameFilter"
+				name="name"
+				type="text"
+				value={props.value}
+				onChange={handleChange}
+			/>
+		</div>
+	);
+};
 
 export default MonsterIndexNameFilter;
