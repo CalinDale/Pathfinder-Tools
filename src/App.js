@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MainMenu from "./components/MainMenu";
 import MonsterIndex from "./components/monster-index/MonsterIndex";
-import MonsterDetails from "./components/monster-index/monster-details/MonsterDetails";
+import MonsterDetails from "./components/monster-index/details/MonsterDetails";
 import { BrowserRouter, Route } from "react-router-dom";
 import Initializer from "./components/Initializer";
 

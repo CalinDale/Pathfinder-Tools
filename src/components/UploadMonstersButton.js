@@ -3,7 +3,7 @@ import { csvjson } from "../resources/csvjson";
 import { connect } from "react-redux";
 import { uploadMonster } from "../store/actions/uploadMonsterActions";
 
-class UploadMonsters extends Component {
+class UploadMonstersButton extends Component {
 	state = { monsters: csvjson };
 	uploadTheMonsters() {
 		/*this.state.monsters.forEach((monster) => {
@@ -31,4 +31,4 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(null, mapDispatchToProps)(UploadMonsters);
+export default connect(null, mapDispatchToProps)(UploadMonstersButton);
