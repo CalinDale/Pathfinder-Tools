@@ -9,7 +9,6 @@ class MonsterIndexFilters extends Component {
 				filterName: "nameFilter",
 				runFilter: (monster, filter) => {
 					let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
-					console.log(this);
 					let filterTerm = filter.values.nameInput
 						.replace(/\s+/g, "")
 						.toLowerCase();
@@ -18,7 +17,9 @@ class MonsterIndexFilters extends Component {
 				checkInUse: (filter) => {
 					return filter.values.nameInput !== "";
 				},
-				inUse: false,
+				isInUse: function () {
+					return this.values.nameInput !== "";
+				},
 				values: { nameInput: "" },
 			},
 			crFilter: {
@@ -28,11 +29,10 @@ class MonsterIndexFilters extends Component {
 					console.log(monster.cr, monsterCR, filterCR, monsterCR === filterCR);
 					return monsterCR === filterCR;
 				},
-				checkInUse: (filter) => {
-					return filter.values.crValueInput !== "";
-				},
 				filterName: "crFilter",
-				inUse: false,
+				isInUse: function () {
+					return this.values.crValueInput !== "";
+				},
 				values: { crValueInput: "", crMinInput: "", crMaxInput: "" },
 			},
 		},
@@ -67,7 +67,7 @@ class MonsterIndexFilters extends Component {
 
 	updateInUseFilters(filter) {
 		let inUseFilters = this.state.inUseFilters;
-		if (filter.inUse === true) {
+		if (filter.isInUse() === true) {
 			inUseFilters[filter.filterName] = filter;
 		} else {
 			delete inUseFilters[filter.filterName];
@@ -78,10 +78,10 @@ class MonsterIndexFilters extends Component {
 	updateFilter = (filterName, newValues) => {
 		let filters = this.state.filters;
 		filters[filterName].values = newValues;
-		let newInUse = filters[filterName].checkInUse(filters[filterName]);
-		filters[filterName].inUse = newInUse;
 		this.setState({ filters });
 		this.updateInUseFilters(filters[filterName]);
+
+		console.log(this.state.inUseFilters);
 
 		this.props.onFiltersChange(this.state.inUseFilters);
 	};
