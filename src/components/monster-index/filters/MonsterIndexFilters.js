@@ -7,16 +7,62 @@ class MonsterIndexFilters extends Component {
 		filters: {
 			nameFilter: {
 				filterName: "nameFilter",
+				runFilter: (monster, filter) => {
+					let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
+					console.log(this);
+					let filterTerm = filter.values.nameInput
+						.replace(/\s+/g, "")
+						.toLowerCase();
+					return monsterName.includes(filterTerm);
+				},
+				checkInUse: (filter) => {
+					return filter.values.nameInput !== "";
+				},
 				inUse: false,
 				values: { nameInput: "" },
 			},
 			crFilter: {
+				runFilter: (monster, filter) => {
+					let monsterCR = this.crToFloat(monster.cr);
+					let filterCR = this.crToFloat(filter.values.crValueInput);
+					console.log(monster.cr, monsterCR, filterCR, monsterCR === filterCR);
+					return monsterCR === filterCR;
+				},
+				checkInUse: (filter) => {
+					return filter.values.crValueInput !== "";
+				},
 				filterName: "crFilter",
 				inUse: false,
 				values: { crValueInput: "", crMinInput: "", crMaxInput: "" },
 			},
 		},
 		inUseFilters: {},
+	};
+
+	crToFloat = (crString) => {
+		//Only approx, don't need to be precise
+		switch (crString) {
+			case "1/2":
+				return 0.5;
+			case "1/3":
+				return 0.3;
+			case "1/4":
+				return 0.25;
+			case "1/5":
+				return 0.2;
+			case "1/6":
+				return 0.15;
+			case "1/7":
+				return 0.14;
+			case "1/8":
+				return 0.12;
+			case "1/9":
+				return 0.11;
+			case "1/10":
+				return 0.1;
+			default:
+				return parseInt(crString);
+		}
 	};
 
 	updateInUseFilters(filter) {
@@ -29,37 +75,16 @@ class MonsterIndexFilters extends Component {
 		this.setState({ inUseFilters });
 	}
 
-	/*updateFilterBeep(filter) {
-		let filters = this.state.filters;
-		let newInUse = this.filterIsInUse(filterName, newValues);
-		filters[filter.filterName] = filter;
-		filters[filter.filterName].inUse = newInUse;
-		this.setState({ filters });
-	}*/
-
 	updateFilter = (filterName, newValues) => {
 		let filters = this.state.filters;
 		filters[filterName].values = newValues;
-		let newInUse = this.filterIsInUse(filters[filterName]);
+		let newInUse = filters[filterName].checkInUse(filters[filterName]);
 		filters[filterName].inUse = newInUse;
-		console.log(this.state.filters);
-		console.log(filters);
 		this.setState({ filters });
 		this.updateInUseFilters(filters[filterName]);
 
 		this.props.onFiltersChange(this.state.inUseFilters);
 	};
-
-	filterIsInUse(filter) {
-		switch (filter.filterName) {
-			case "nameFilter":
-				return filter.values.nameInput !== "";
-			case "crFilter":
-				return filter.values.crValueInput !== "";
-			default:
-				break;
-		}
-	}
 
 	render() {
 		return (
