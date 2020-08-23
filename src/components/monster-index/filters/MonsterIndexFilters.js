@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MonsterNameFilter from "./MonsterNameFilter";
-import MonsterCRFilter from "./MonsterCRFilter";
+import MonsterCRValueFilter from "./MonsterCRValueFilter";
 
 class MonsterIndexFilters extends Component {
 	state = {
@@ -22,18 +22,18 @@ class MonsterIndexFilters extends Component {
 				},
 				values: { nameInput: "" },
 			},
-			crFilter: {
+			crValueFilter: {
 				runFilter: (monster, filter) => {
 					let monsterCR = this.crToFloat(monster.cr);
 					let filterCR = this.crToFloat(filter.values.crValueInput);
 					console.log(monster.cr, monsterCR, filterCR, monsterCR === filterCR);
 					return monsterCR === filterCR;
 				},
-				filterName: "crFilter",
+				filterName: "crValueFilter",
 				isInUse: function () {
 					return this.values.crValueInput !== "";
 				},
-				values: { crValueInput: "", crMinInput: "", crMaxInput: "" },
+				values: { crValueInput: "" },
 			},
 		},
 		inUseFilters: {},
@@ -94,10 +94,13 @@ class MonsterIndexFilters extends Component {
 					filter={this.state.filters.nameFilter}
 					updateFilter={this.updateFilter}
 				/>
-				<MonsterCRFilter
-					filter={this.state.filters.crFilter}
-					updateFilter={this.updateFilter}
-				/>
+				<div id="crFilterContainer">
+					<label>CR:</label>
+					<MonsterCRValueFilter
+						filter={this.state.filters.crValueFilter}
+						updateFilter={this.updateFilter}
+					/>
+				</div>
 			</form>
 		);
 	}
