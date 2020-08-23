@@ -1,41 +1,61 @@
 import React, { Component } from "react";
 import MonsterNameFilter from "./MonsterNameFilter";
+import MonsterCRFilter from "./MonsterCRFilter";
 
 class MonsterIndexFilters extends Component {
 	state = {
-		filters: { name: { filterName: "name", value: "", inUse: false } },
+		filters: {
+			nameFilter: {
+				filterName: "nameFilter",
+				inUse: false,
+				values: { nameInput: "" },
+			},
+			crFilter: {
+				filterName: "crFilter",
+				inUse: false,
+				values: { crValueInput: "", crMinInput: "", crMaxInput: "" },
+			},
+		},
 		inUseFilters: {},
 	};
 
-	updateFilter = (name, value) => {
-		let filters = this.state.filters;
-		filters[name].value = value;
-
-		let oldInUse = this.state.filters[name].inUse;
-		filters[name].inUse = this.filterIsInUse(name, value);
-
+	updateInUseFilters(filter) {
 		let inUseFilters = this.state.inUseFilters;
-
-		if (filters[name].inUse === true) {
-			inUseFilters[name] = filters[name];
-		} else if (filters[name].inUse === false) {
-			delete this.state.inUseFilters[name];
-		}
-		this.setState({ filters, inUseFilters });
-
-		if (oldInUse === false && filters[name].inUse === true) {
-			this.props.onFiltersAdd(filters[name]);
-		} else if (oldInUse === false && filters[name.inUse === false]) {
-			//Do nothing
+		if (filter.inUse === true) {
+			inUseFilters[filter.filterName] = filter;
 		} else {
-			this.props.onFiltersChange(inUseFilters);
+			delete inUseFilters[filter.filterName];
 		}
+		this.setState({ inUseFilters });
+	}
+
+	/*updateFilterBeep(filter) {
+		let filters = this.state.filters;
+		let newInUse = this.filterIsInUse(filterName, newValues);
+		filters[filter.filterName] = filter;
+		filters[filter.filterName].inUse = newInUse;
+		this.setState({ filters });
+	}*/
+
+	updateFilter = (filterName, newValues) => {
+		let filters = this.state.filters;
+		filters[filterName].values = newValues;
+		let newInUse = this.filterIsInUse(filters[filterName]);
+		filters[filterName].inUse = newInUse;
+		console.log(this.state.filters);
+		console.log(filters);
+		this.setState({ filters });
+		this.updateInUseFilters(filters[filterName]);
+
+		this.props.onFiltersChange(this.state.inUseFilters);
 	};
 
-	filterIsInUse(name, value) {
-		switch (name) {
-			case "name":
-				return value !== "";
+	filterIsInUse(filter) {
+		switch (filter.filterName) {
+			case "nameFilter":
+				return filter.values.nameInput !== "";
+			case "crFilter":
+				return filter.values.crValueInput !== "";
 			default:
 				break;
 		}
@@ -46,7 +66,11 @@ class MonsterIndexFilters extends Component {
 			<form className="MonsterFilters">
 				<h2>Monster Filters</h2>
 				<MonsterNameFilter
-					value={this.state.filters.name.value}
+					filter={this.state.filters.nameFilter}
+					updateFilter={this.updateFilter}
+				/>
+				<MonsterCRFilter
+					filter={this.state.filters.crFilter}
 					updateFilter={this.updateFilter}
 				/>
 			</form>

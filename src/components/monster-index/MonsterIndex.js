@@ -8,16 +8,48 @@ import { compose } from "redux";
 
 class MonsterIndex extends Component {
 	filterFunctions = {
-		name: (monster, filters) => {
-			console.log("currently filtering " + monster.name + " by name");
+		nameFilter: (monster, filters) => {
 			let monsterName = monster.name.replace(/\s+/g, "").toLowerCase();
-			let filterTerm = filters.name.value.replace(/\s+/g, "").toLowerCase();
+			let filterTerm = filters.nameFilter.values.nameInput
+				.replace(/\s+/g, "")
+				.toLowerCase();
 			return monsterName.includes(filterTerm);
+		},
+		crFilter: (monster, filters) => {
+			let crToFloat = (crString) => {
+				//Only approx, don't need to be precise
+				switch (crString) {
+					case "1/2":
+						return 0.5;
+					case "1/3":
+						return 0.3;
+					case "1/4":
+						return 0.25;
+					case "1/5":
+						return 0.2;
+					case "1/6":
+						return 0.15;
+					case "1/7":
+						return 0.14;
+					case "1/8":
+						return 0.12;
+					case "1/9":
+						return 0.11;
+					case "1/10":
+						return 0.1;
+					default:
+						return parseInt(crString);
+				}
+			};
+
+			let monsterCR = crToFloat(monster.cr);
+			let filterCR = crToFloat(filters.crFilter.values.crValueInput);
+			console.log(monster.cr, monsterCR, filterCR, monsterCR === filterCR);
+			return monsterCR === filterCR;
 		},
 	};
 
 	onFiltersChange = (filters) => {
-		console.log(filters);
 		this.props.updateFilteredMonsters(
 			this.filterMonsters(this.props.allMonsters, filters)
 		);
